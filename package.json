@@ -1,7 +1,7 @@
 {
   "name": "rsa-encryption-demo",
   "version": "0.1.0",
-  "homepage": "https://github.com/Kartik-Tomar/rsa-encryption-demo", 
+  "homepage": "./", 
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -16,11 +16,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "build": "react-scripts build && cp build/index.html build/404.html"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
