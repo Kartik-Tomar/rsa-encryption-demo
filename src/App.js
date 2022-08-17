@@ -1,13 +1,11 @@
 import { useState } from "react";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import generateKey from './encryption/generateKeys';
 import encrypt from "./encryption/encrypt";
 import decrypt from "./encryption/decrypt";
 import generateLargePrimeNumbers from "./encryption/generateLargePrimeNumbers";
 import Loader from "./components/loader";
 import Input from "./components/input";
-import ShowNotioDoc from "./components/showNotioDoc.js";
 
 function App() {
 
@@ -109,7 +107,6 @@ function App() {
       {isLoading && <Loader />}
       <h1 className="mt-5 mb-4">RSA Encrypt</h1>
       <div>
-        <ShowNotioDoc btnText={"Generate large no (code)"} id={"gln"} link={"https://cold-cord-d85.notion.site/Generate-Large-Number-458cea598c9f4ab39eb9705b8d718c69"} />
       </div>
       <div className="mb-5">
         <div className="row mb-3">
