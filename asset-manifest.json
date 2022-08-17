@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/Kartik-Tomar/rsa-encryption-demo/static/css/main.5f46f047.css",
-    "main.js": "/Kartik-Tomar/rsa-encryption-demo/static/js/main.23dfde76.js",
-    "static/js/787.9064d906.chunk.js": "/Kartik-Tomar/rsa-encryption-demo/static/js/787.9064d906.chunk.js",
-    "index.html": "/Kartik-Tomar/rsa-encryption-demo/index.html",
-    "main.5f46f047.css.map": "/Kartik-Tomar/rsa-encryption-demo/static/css/main.5f46f047.css.map",
-    "main.23dfde76.js.map": "/Kartik-Tomar/rsa-encryption-demo/static/js/main.23dfde76.js.map",
-    "787.9064d906.chunk.js.map": "/Kartik-Tomar/rsa-encryption-demo/static/js/787.9064d906.chunk.js.map"
+    "main.css": "./static/css/main.5f46f047.css",
+    "main.js": "./static/js/main.d2a4fe33.js",
+    "static/js/787.9064d906.chunk.js": "./static/js/787.9064d906.chunk.js",
+    "index.html": "./index.html",
+    "main.5f46f047.css.map": "./static/css/main.5f46f047.css.map",
+    "main.d2a4fe33.js.map": "./static/js/main.d2a4fe33.js.map",
+    "787.9064d906.chunk.js.map": "./static/js/787.9064d906.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.5f46f047.css",
-    "static/js/main.23dfde76.js"
+    "static/js/main.d2a4fe33.js"
   ]
 }
