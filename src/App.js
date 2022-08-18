@@ -1,15 +1,18 @@
 import { useState } from "react";
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
 import generateKey from './encryption/generateKeys';
 import encrypt from "./encryption/encrypt";
 import decrypt from "./encryption/decrypt";
 import generateLargePrimeNumbers from "./encryption/generateLargePrimeNumbers";
 import Loader from "./components/loader";
 import Input from "./components/input";
+import ShowCode from "./components/showCode.js/index.js";
+import { generateLargeNumberString, calculateBigPowerString, generateLargePrimeNumbersString, findGCDString, generateKeyString, findEgcdString, encryptString, decryptString } from "./codeStrings";
 
 function App() {
 
-  const [keySize, setKeySize] = useState(64);
+  const [keySize, setKeySize] = useState(32);
   const [p, setP] = useState('');
   const [q, setQ] = useState('');
   const [N, setN] = useState('');
@@ -107,6 +110,8 @@ function App() {
       {isLoading && <Loader />}
       <h1 className="mt-5 mb-4">RSA Encrypt</h1>
       <div>
+        <ShowCode btnText={"Generate Large Number (code)"} id={"gln"} codeString={generateLargeNumberString} />
+        <ShowCode btnText={"Calculate Big Power (code)"} id={"cbps"} codeString={calculateBigPowerString} />
       </div>
       <div className="mb-5">
         <div className="row mb-3">
@@ -122,6 +127,7 @@ function App() {
           </div>
         </div>
         <button className="btn btn-primary" onClick={handleGeneratePrimeButtonClick}>Generate Prime Numbers</button>
+        <ShowCode btnText={"Generate Large Prime Numbers (code)"} id={"glpns"} codeString={generateLargePrimeNumbersString} />
       </div>
       <div className="mb-5">
         <div className="row mb-3">
@@ -139,6 +145,9 @@ function App() {
           </div>
         </div>
         <button className="btn btn-primary" onClick={handleGenerateButtonClick}>Generate Keys</button>
+        <ShowCode btnText={"Find Greatest Common Divisor (code)"} id={"fgcd"} codeString={findGCDString} />
+        <ShowCode btnText={"Find Euclidean algorithm Greatest Common Divisor (code)"} id={"fegcd"} codeString={findEgcdString} />
+        <ShowCode btnText={"Generate Keys (code)"} id={"gk"} codeString={generateKeyString} />
       </div>
       <div className="mb-5">
         <div className="row mb-3">
@@ -153,6 +162,7 @@ function App() {
             </div>
           </div>
           <button className="btn btn-primary" onClick={handleEncryptButton}>Encrypt Message</button>
+          <ShowCode btnText={"Encrypt Message (code)"} id={"em"} codeString={encryptString} />
         </div>
         <div className="mb-5">
           <div className="row mb-3">
@@ -161,6 +171,7 @@ function App() {
             </div>
           </div>
           <button className="btn btn-primary" onClick={handleDecryptButton}>Decrypt Message</button>
+          <ShowCode btnText={"Decrypt Message (code)"} id={"dm"} codeString={decryptString} />
         </div>
       </div>
       <button className="btn btn-danger" onClick={clearState}>Clear State</button>

@@ -3,6 +3,8 @@
 import calculateBigPower from "../utils/calculateBigPower";
 import generateLargeNumber from "../utils/generateLargeNumber";
 
+// (all literal integers converted to use n suffix denoting BigInt)
+
 // This function is called
 // for all k trials. It returns
 // false if n is composite and
@@ -11,17 +13,16 @@ import generateLargeNumber from "../utils/generateLargeNumber";
 // number such that d*2<sup>r</sup> = n-1
 // for some r >= 1
 function miillerRabinTest(d, n) {
-    // (JML- all literal integers converted to use n suffix denoting BigInt)
 
     // Pick a random number in [2..n-2]
     // Corner cases make sure that n > 4
     /* 
-        JML- I can't mix the Number returned by Math.random with
+        can't mix the Number returned by Math.random with
         operations involving BigInt. The workaround is to create a random integer 
         with precision 6 and convert it to a BigInt.
     */
     const r = BigInt(Math.floor(Math.random() * 100_000))
-    // JML- now I have to divide by the multiplier used above (BigInt version)
+    // now I have to divide by the multiplier used above (BigInt version)
     const y = r * (n - 2n) / 100_000n
     let a = 2n + y % (n - 4n);
 
@@ -58,7 +59,6 @@ function miillerRabinTest(d, n) {
 // accuracy level. Higher value of
 // k indicates more accuracy.
 const isPrime = (n, k = 40) => {
-    // (JML- all literal integers converted to use n suffix denoting BigInt)
     // Corner cases
     if (n <= 1n || n == 4n) return false;
     if (n <= 3n) return true;
@@ -78,6 +78,7 @@ const isPrime = (n, k = 40) => {
 }
 
 const generateLargePrimeNumbers = (keySize, testIterations) => {
+    // key size is in bits here
     let num = generateLargeNumber(keySize);
     let checkPrime = isPrime(BigInt(num, testIterations));
     while (!checkPrime) {
