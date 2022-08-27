@@ -3,11 +3,11 @@
 // extended Euclidean algorithm, greatest common divisor
 const findEgcd = (e, phiN) => {
 
-    let s = 0n, oldS = 1n;
-    let t = 1n, oldT = 0n;
+    let s = BigInt(0), oldS = BigInt(1);
+    let t = BigInt(1), oldT = BigInt(0);
     let r = phiN, oldR = e;
 
-    while (r != 0n) {
+    while (r !== BigInt(0)) {
 
         let oldOldR = oldR;
         let oldOldS = oldS;

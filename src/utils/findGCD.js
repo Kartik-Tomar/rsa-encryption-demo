@@ -1,5 +1,3 @@
-/* global BigInt */
-
 // greatest common divisor
 const findGCD = (x, y) => {
     while (y) {

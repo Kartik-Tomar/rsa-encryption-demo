@@ -62,7 +62,7 @@ function miillerRabinTest(d, n) {
     // Compute a^d % n
     let x = calculateBigPower(a, d, n);
 
-    if (x == 1n || x == n - 1n)
+    if (x === 1n || x === n - 1n)
         return true;
 
     // Keep squaring x while one
@@ -71,13 +71,13 @@ function miillerRabinTest(d, n) {
     // (i) d does not reach n-1
     // (ii) (x^2) % n is not 1
     // (iii) (x^2) % n is not n-1
-    while (d != n - 1n) {
+    while (d !== n - 1n) {
         x = (x * x) % n;
         d *= 2n;
 
-        if (x == 1n)
+        if (x === 1n)
             return false;
-        if (x == n - 1n)
+        if (x === n - 1n)
             return true;
     }
 
@@ -93,17 +93,17 @@ function miillerRabinTest(d, n) {
 // k indicates more accuracy.
 const isPrime = (n, k = 40) => {
     // Corner cases
-    if (n <= 1n || n == 4n) return false;
+    if (n <= 1n || n === 4n) return false;
     if (n <= 3n) return true;
 
     // Find r such that n =
     // 2^d * r + 1 for some r >= 1
     let d = n - 1n;
-    while (d % 2n == 0n)
+    while (d % 2n === 0n)
         d /= 2n;
 
     // Iterate given nber of 'k' times
-    for (let i = 0; i < k; i++)
+    for (let i = 0n; i < k; i++)
         if (!miillerRabinTest(d, n))
             return false;
 
@@ -112,13 +112,20 @@ const isPrime = (n, k = 40) => {
 
 const generateLargePrimeNumbers = (keySize, testIterations) => {
     // key size is in bits here
-    let num = generateLargeNumber(keySize);
-    let checkPrime = isPrime(BigInt(num, testIterations));
-    while (!checkPrime) {
-        num = generateLargeNumber(keySize);
-        checkPrime = isPrime(BigInt(num, testIterations));
-    }
-    return num.toString();
+    return new Promise((resolve, reject) => {
+        let num = generateLargeNumber(keySize);
+        let checkPrime = isPrime(BigInt(num, testIterations));
+        let runLoop = checkPrime ? false : true;
+        // notEqualNum is the other prime number
+        if (notEqualNum) runLoop = checkPrime && num != notEqualNum && num > 1 ? false : true;
+        while (runLoop) {
+            num = generateLargeNumber(keySize);
+            checkPrime = isPrime(BigInt(num, testIterations));
+            runLoop = checkPrime ? false : true
+            if (notEqualNum) runLoop = checkPrime && num != notEqualNum && num > 1 ? false : true;
+        }
+        resolve(num.toString());
+    })
 }
 `
 
@@ -179,9 +186,9 @@ const findDecryptionKey = (e, phiN) => {
 const findEncryptionKey = (N, phiN, keySize) => {
   while (true) {
     let e = generateLargeNumber(keySize);
-    let isCoPrimeWithN = findGCD(e, N) == 1;
-    let isCoPrimeWithPhiN = findGCD(e, phiN) == 1;
-    if (isCoPrimeWithN && isCoPrimeWithPhiN) {
+    let isCoPrimeWithN = findGCD(e, N) === 1n;
+    let isCoPrimeWithPhiN = findGCD(e, phiN) === 1n;
+    if (isCoPrimeWithN && isCoPrimeWithPhiN && e > 1n) {
       return e;
     }
   }

@@ -8,7 +8,9 @@ import generateLargePrimeNumbers from "./encryption/generateLargePrimeNumbers";
 import Loader from "./components/loader";
 import Input from "./components/input";
 import ShowCode from "./components/showCode.js/index.js";
+import logo from "./assets/logo.png"
 import { generateLargeNumberString, calculateBigPowerString, generateLargePrimeNumbersString, findGCDString, generateKeyString, findEgcdString, encryptString, decryptString } from "./codeStrings";
+import ErrorModal from "./components/errorModal";
 
 function App() {
 
@@ -23,6 +25,8 @@ function App() {
   const [encryptedMsg, setEncryptedMsg] = useState('');
   const [decryptedMsg, setDecryptedMsg] = useState('')
   const [isLoading, setIsLoader] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const clearState = () => {
     setP('');
@@ -33,15 +37,24 @@ function App() {
     setD('');
     setEncryptedMsg('');
     setDecryptedMsg('');
+    setShowError(false);
+    setErrorMessage('');
   }
 
   const handleGeneratePrimeButtonClick = () => {
-    setIsLoader(true);
-    setTimeout(() => {
-      setP(generateLargePrimeNumbers(keySize, 1000));
-      setQ(generateLargePrimeNumbers(keySize, 1000));
-      setIsLoader(false);
-    }, 100);
+    if (keySize < 10) {
+      setShowError(true);
+      setErrorMessage('Key size has to be greater than or equal to 10 bits')
+    } else {
+      setIsLoader(true);
+      setTimeout(async () => {
+        let p = await generateLargePrimeNumbers(keySize, 1000);
+        let q = await generateLargePrimeNumbers(keySize, 1000, p)
+        setP(p);
+        setQ(q);
+        setIsLoader(false);
+      }, 100);
+    }
   }
 
   const handleGenerateButtonClick = () => {
@@ -73,23 +86,28 @@ function App() {
   };
 
   const runCompleteProcess = () => {
-    setIsLoader(true);
-    setTimeout(() => {
-      let p1 = generateLargePrimeNumbers(keySize, 1000);
-      let p2 = generateLargePrimeNumbers(keySize, 1000);
-      let { N, phiN, e, d } = generateKey(p1, p2, keySize);
-      let encMsg = encrypt(msg, e, N);
-      let decMsg = decrypt(encMsg, d, N);
-      setP(p1);
-      setQ(p2);
-      setN(N.toString());
-      setPhiN(phiN.toString());
-      setE(e.toString());
-      setD(d.toString());
-      setEncryptedMsg(encMsg);
-      setDecryptedMsg(decMsg);
-      setIsLoader(false);
-    }, 100);
+    if (keySize < 10) {
+      setShowError(true);
+      setErrorMessage('Key size has to be greater than or equal to 10 bits')
+    } else {
+      setIsLoader(true);
+      setTimeout(async () => {
+        let p1 = await generateLargePrimeNumbers(keySize, 1000);
+        let p2 = await generateLargePrimeNumbers(keySize, 1000, p1);
+        let { N, phiN, e, d } = generateKey(p1, p2, keySize);
+        let encMsg = encrypt(msg, e, N);
+        let decMsg = decrypt(encMsg, d, N);
+        setP(p1);
+        setQ(p2);
+        setN(N.toString());
+        setPhiN(phiN.toString());
+        setE(e.toString());
+        setD(d.toString());
+        setEncryptedMsg(encMsg);
+        setDecryptedMsg(decMsg);
+        setIsLoader(false);
+      }, 100);
+    }
   }
 
   const handleChange = (e) => {
@@ -108,7 +126,11 @@ function App() {
   return (
     <div className="App container mb-5">
       {isLoading && <Loader />}
-      <h1 className="mt-5 mb-4">RSA Encrypt</h1>
+      <ErrorModal id="error" showModal={showError} errorMessage={errorMessage} setShowError={setShowError} />
+      <h1 className="mt-5 mb-4">
+        <img src={logo} width={65} alt="logo" />
+        {` `}RSA Encrypt
+      </h1>
       <div>
         <ShowCode btnText={"Generate Large Number (code)"} id={"gln"} codeString={generateLargeNumberString} />
         <ShowCode btnText={"Calculate Big Power (code)"} id={"cbps"} codeString={calculateBigPowerString} />

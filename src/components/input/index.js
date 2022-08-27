@@ -2,8 +2,8 @@ import './input.css';
 const Input = (props) => {
     const { type, value, onChange, isDisabled, id, label, keyText, rows } = props;
     return (
-        <div class="form-group">
-            <label for={id}>
+        <div className="form-group">
+            <label htmlFor={id}>
                 <span className="key-text" >{keyText}</span>
                 {label}
             </label>
